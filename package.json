@@ -1,0 +1,23 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/JoeMendoza-Sales/Tests#readme",
+  "bugs": {
+    "url": "https://github.com/JoeMendoza-Sales/Tests/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoeMendoza-Sales/Tests.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "checksumai": "^2.0.17"
+  }
+}

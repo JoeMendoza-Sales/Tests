@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@checksum/*": ["./*"]
+    }
+  },
+  "include": ["./**/*", ".chk/**/*"]
+}

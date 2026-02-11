@@ -1,0 +1,11 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.auth
+.eval.checksum.spec.ts
+*.rrweb.json.jsonl
+*.rrweb.jsonl
+.chk/
+test-instrumentation/
