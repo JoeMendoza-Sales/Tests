@@ -2,6 +2,16 @@ import { RunMode, getChecksumConfig } from "@checksum-ai/runtime";
 import { resolve } from "path";
 require("dotenv").config({ path: resolve(__dirname, ".env") });
 
+if (
+  !process.env.CHECKSUM_API_KEY ||
+  !process.env.USERNAME ||
+  !process.env.PASSWORD ||
+  !process.env.BASE_URL ||
+  !process.env.LOGIN_URL
+) {
+  throw new Error("Missing environment variables");
+}
+
 export default getChecksumConfig({
   /**
    * Checksum Run mode. See Readme for more info
@@ -11,7 +21,7 @@ export default getChecksumConfig({
   /**
    * Insert here your Checksum API key. You can find it in https://app.checksum.ai/#/settings/
    */
-  apiKey: "<API key>",
+  apiKey: process.env.CHECKSUM_API_KEY,
 
   /**
    * Define your test run environments and test users within each environment.
@@ -20,16 +30,15 @@ export default getChecksumConfig({
    */
   environments: [
     {
-      name: "<The name of the environment>",
-      baseURL:
-        "<The base URL of the tested app. e.g. https://example.com. URLs in the tests will be relative to the base URL>",
-      loginURL: "<The URL of the login page>",
+      name: "joevibeapp-testing",
+      baseURL: process.env.BASE_URL,
+      loginURL: process.env.LOGIN_URL,
       default: true,
       users: [
         {
-          role: "<The role of the user, may be undefined in case of single user>",
-          username: "<username>",
-          password: "<password>",
+          role: "",
+          username: process.env.USERNAME,
+          password: process.env.PASSWORD,
           default: true,
         },
       ],
@@ -40,11 +49,11 @@ export default getChecksumConfig({
     /**
      * Whether to use Checksum Smart Selector in order to recover from failing to locate an element for an action (see README)
      */
-    useChecksumSelectors: true,
+    useChecksumSelectors: false,
     /**
      * Whether to use Checksum AI in order to recover from a failed action or assertion (see README)
      */
-    useChecksumAI: { actions: true, assertions: false },
+    useChecksumAI: { actions: true, assertions: true },
     /**
      * Whether to use mock API data when running your tests (see README)
      */
