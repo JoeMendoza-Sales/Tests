@@ -2,15 +2,8 @@ import { RunMode, getChecksumConfig } from "@checksum-ai/runtime";
 import { resolve } from "path";
 require("dotenv").config({ path: resolve(__dirname, ".env") });
 
-if (
-  !process.env.CHECKSUM_API_KEY ||
-  !process.env.USERNAME ||
-  !process.env.PASSWORD ||
-  !process.env.BASE_URL ||
-  !process.env.LOGIN_URL
-) {
-  throw new Error("Missing environment variables");
-}
+// Environment variables are optional for local testing
+const BASE_URL = process.env.BASE_URL || "https://joetodoapp-a03b4.web.app/";
 
 export default getChecksumConfig({
   /**
@@ -21,7 +14,7 @@ export default getChecksumConfig({
   /**
    * Insert here your Checksum API key. You can find it in https://app.checksum.ai/#/settings/
    */
-  apiKey: process.env.CHECKSUM_API_KEY,
+  apiKey: process.env.CHECKSUM_API_KEY || "local-testing",
 
   /**
    * Define your test run environments and test users within each environment.
@@ -31,14 +24,14 @@ export default getChecksumConfig({
   environments: [
     {
       name: "joevibeapp-testing",
-      baseURL: process.env.BASE_URL,
-      loginURL: process.env.LOGIN_URL,
+      baseURL: BASE_URL,
+      loginURL: BASE_URL,
       default: true,
       users: [
         {
           role: "",
-          username: process.env.USERNAME,
-          password: process.env.PASSWORD,
+          username: process.env.USERNAME || "",
+          password: process.env.PASSWORD || "",
           default: true,
         },
       ],
