@@ -142,8 +142,15 @@ test.describe('Todo Application Tests', () => {
       await checksumAI("Click the delete button", async () => {
         await todoItem.locator('.btn-icon.delete').click();
       });
+
+      // Step 5: Verify the confirmation modal appears and click 'Yes' to confirm
+      const modal = page.locator('.modal-overlay');
+      await expect(modal, "Confirmation modal should be visible").toBeVisible();
+      await checksumAI("Click 'Yes' to confirm deletion", async () => {
+        await modal.locator('.btn-yes').click();
+      });
       
-      // Step 5: Verify the todo is removed and empty state is displayed
+      // Step 6: Verify the todo is removed and empty state is displayed
       await expect(
         page.locator('.todo-item'),
         "Todo item should be removed after deletion"
