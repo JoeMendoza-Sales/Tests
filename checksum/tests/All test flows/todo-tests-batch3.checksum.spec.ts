@@ -326,4 +326,56 @@ test.describe('Todo Application Tests - Batch 3', () => {
     }
   );
 
+  test(
+    defineChecksumTest('Delete Confirmation Cancel', 'Qr5St'),
+    async ({ page, vs }) => {
+      // Step 1: Clear localStorage and navigate
+      await setupTest(page, checksumAI);
+
+      // Step 2: Add a todo item
+      await addTodo(page, checksumAI, 'Task to keep');
+
+      // Step 3: Verify the todo item is visible
+      const todoItem = page.locator('.todo-item');
+      await expect(
+        todoItem.locator('.todo-text'),
+        "Todo item should display 'Task to keep' text"
+      ).toHaveText('Task to keep');
+
+      // Step 4: Click the delete button to trigger the confirmation modal
+      await checksumAI("Click the delete button", async () => {
+        await todoItem.locator('.btn-icon.delete').click();
+      });
+
+      // Step 5: Verify the confirmation modal appears with 'Are you sure?' message
+      const modal = page.locator('.modal-overlay');
+      await expect(modal, "Confirmation modal should be visible").toBeVisible();
+      await expect(
+        modal.locator('.modal p'),
+        "Modal should display 'Are you sure?' message"
+      ).toHaveText('Are you sure?');
+
+      // Step 6: Click the 'No' button to cancel deletion
+      await checksumAI("Click the 'No' button to cancel deletion", async () => {
+        await modal.locator('.btn-no').click();
+      });
+
+      // Step 7: Verify the modal is closed
+      await expect(
+        page.locator('.modal-overlay'),
+        "Confirmation modal should be closed after clicking No"
+      ).not.toBeVisible();
+
+      // Step 8: Verify the todo item is still visible (was NOT deleted)
+      await expect(
+        page.locator('.todo-item'),
+        "Todo item should still exist after canceling deletion"
+      ).toBeVisible();
+      await expect(
+        page.locator('.todo-item .todo-text'),
+        "Todo text should still display 'Task to keep'"
+      ).toHaveText('Task to keep');
+    }
+  );
+
 });
