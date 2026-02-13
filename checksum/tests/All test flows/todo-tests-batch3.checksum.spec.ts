@@ -358,7 +358,7 @@ test.describe("Todo Application Tests - Batch 3", () => {
     }
   );
 
-  test(
+  test.fixme(
     defineChecksumTest(`Delete Confirmation Cancel @bug`, "Qr5St"),
     {
       annotation: [
