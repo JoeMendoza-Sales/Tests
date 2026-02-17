@@ -49,10 +49,10 @@ function getPastDateString(daysAgo: number): string {
   return `${year}-${month}-${day}`;
 }
 
-// Helper: Format date from yyyy-mm-dd to mm/dd/yyyy (app's display format)
+// Helper: Format date from yyyy-mm-dd to mm/dd/yy (app's display format)
 function formatDateForDisplay(dateStr: string): string {
   const [year, month, day] = dateStr.split("-");
-  return `${month}/${day}/${year}`;
+  return `${month}/${day}/${year.slice(-2)}`;
 }
 
 test.describe("Todo Application Tests - Batch 3", () => {
@@ -157,27 +157,9 @@ test.describe("Todo Application Tests - Batch 3", () => {
       // Step 1: Clear localStorage and navigate
       await setupTest(page, checksumAI);
 
-      // Step 2: Click on text input and type 'Overdue task'
-      await checksumAI("Click on todo input", async () => {
-        await page.locator("#todoInput").click();
-      });
-      await checksumAI("Enter 'Overdue task' in input", async () => {
-        await page.locator("#todoInput").fill("Overdue task");
-      });
-
-      // Step 3: Click on date input and select a past date (yesterday)
+      // Steps 2-4: Add todo with a past due date (yesterday)
       const yesterdayDate = getPastDateString(1);
-      await checksumAI("Click on due date input", async () => {
-        await page.locator("#dueDateInput").click();
-      });
-      await checksumAI("Set due date to yesterday", async () => {
-        await page.locator("#dueDateInput").fill(yesterdayDate);
-      });
-
-      // Step 4: Click the 'Add' button
-      await checksumAI("Click Add button", async () => {
-        await page.locator(".btn-primary").click();
-      });
+      await addTodo(page, checksumAI, "Overdue task", yesterdayDate);
 
       // Step 5: Verify the todo item appears with the due date visible
       const todoItem = page.locator(".todo-item");
