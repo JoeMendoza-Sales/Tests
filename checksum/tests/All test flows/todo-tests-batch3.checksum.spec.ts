@@ -358,13 +358,8 @@ test.describe("Todo Application Tests - Batch 3", () => {
     }
   );
 
-  test.fixme(
-    defineChecksumTest(`Delete Confirmation Cancel @bug`, "Qr5St"),
-    {
-      annotation: [
-        { type: "bug", description: `Should keep task instead of deleting it` },
-      ],
-    },
+  test(
+    defineChecksumTest("Delete Confirmation Cancel", "Qr5St"),
     async ({ page, vs }) => {
       // Step 1: Clear localStorage and navigate
       await setupTest(page, checksumAI);
