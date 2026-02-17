@@ -130,6 +130,11 @@ test.describe("Todo Application Tests - Batch 3", () => {
         await buyMilkTodoAfterEdit.locator(".btn-icon.delete").click();
       });
 
+      // Confirm deletion in the modal
+      await checksumAI("Click 'Yes' to confirm deletion", async () => {
+        await page.locator(".btn-yes").click();
+      });
+
       // Step 10: Verify 'Buy milk' is removed and only 'Call doctor' remains
       await expect(
         page.locator(".todo-item"),
