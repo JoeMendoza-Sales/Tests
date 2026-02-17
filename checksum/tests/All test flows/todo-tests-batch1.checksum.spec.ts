@@ -41,10 +41,10 @@ function getFutureDateString(daysFromNow: number): string {
   return `${year}-${month}-${day}`;
 }
 
-// Helper: Format date from yyyy-mm-dd to mm/dd/yyyy (app's display format)
+// Helper: Format date from yyyy-mm-dd to mm/dd/yy (app's display format)
 function formatDateForDisplay(dateStr: string): string {
   const [year, month, day] = dateStr.split('-');
-  return `${month}/${day}/${year}`;
+  return `${month}/${day}/${year.slice(-2)}`;
 }
 
 test.describe('Todo Application Tests', () => {
